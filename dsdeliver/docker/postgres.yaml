@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_DB: dsdeliver_dev
+      POSTGRES_PASSWORD: pass_dsdeliver
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    ports:
+      - "5433:5432"
+    volumes:
+      - pdb:/var/lib/postgresql/data
+    networks:
+      - postgres-compose-network
+
+  teste-pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dsdeliver@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - "5555:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-compose-network
+
+volumes:
+  pdb:
+networks:
+  postgres-compose-network:
+    driver: bridge
