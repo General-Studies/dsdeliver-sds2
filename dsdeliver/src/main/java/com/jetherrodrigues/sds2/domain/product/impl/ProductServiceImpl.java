@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product getOne(final Long id) {
         return productRepository.getOne(id);
     }
